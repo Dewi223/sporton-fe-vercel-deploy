@@ -18,8 +18,8 @@ const HeroSection = () => {
           <h1 className="font-extrabold text-[95px] italic bg-gradient-to-b leading-tight from-black to-[#979797] bg-clip-text text-transparent ">
           WEAR YOUR <br /> TOP-QUALITY <br /> SPORTSWEAR
           </h1>
-          <p className="w=1/2 mt-10 leading-loose">
-            Engineered for endurance and designed for speed. Experience gear 
+          <p className="w-1/2 mt-10 leading-loose">
+            Engineered for endurance and designed for speed. Experience gear
             that moves as fast as you do. Premium fabrics. Unmatched comfort. 
             Limitless motion.
           </p>
