@@ -1,5 +1,5 @@
 import Image from 'next/image';
-// Hapus import ProductActions jika tidak digunakan
+
 
 const ProductDetail = () => {
     return (
@@ -35,7 +35,7 @@ const ProductDetail = () => {
                 }).format(458000)}
             </div>
             
-            {/* Tambahkan tombol langsung jika ProductActions tidak ada */}
+            
             <button className="bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-dark transition">
                 Add to Cart
             </button>
