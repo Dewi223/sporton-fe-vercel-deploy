@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import ProductActions from "../../components/product-detail/product-actions";
+import priceFormatter from "../../../utils/price-formatter";
 
 
 const ProductDetail = () => {
@@ -28,20 +30,13 @@ const ProductDetail = () => {
                 traction.
             </p>
             <div className="text-primary text-[32px] font-semibold mb-12">
-                {Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                    maximumFractionDigits: 0,
-                }).format(458000)}
+                {priceFormatter(458000)}
             </div>
+            <ProductActions />
             
-            
-            <button className="bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-dark transition">
-                Add to Cart
-            </button>
           </div>
         </main>
     );
-}
+};
 
 export default ProductDetail;
