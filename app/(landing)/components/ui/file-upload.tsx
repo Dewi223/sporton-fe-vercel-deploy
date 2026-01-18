@@ -1,0 +1,75 @@
+"use client";
+
+import { useState, useRef } from "react";
+import { FiUploadCloud, FiTrash2, FiImage } from "react-icons/fi";
+
+type TFileUploadProps = {
+    onFileSelect?: (file: File | null) => void;
+}
+
+const FileUpload = ({ onFileSelect }: TFileUploadProps) => {
+    const [file, setFile] = useState<File | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const handleFileChange = (selectedFile?: File) => {
+        if (!selectedFile) return;
+
+        setFile(selectedFile);
+        onFileSelect?.(selectedFile);
+    }
+
+    const removeFile = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setFile(null);
+        onFileSelect?.(null);
+        
+        // Reset input file value
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
+    }
+
+    return (
+        <div 
+            onClick={() => fileInputRef.current?.click()}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => {
+                e.preventDefault();
+                handleFileChange(e.dataTransfer.files?.[0]);
+            }}
+            className="flex flex-col justify-center items-center w-full py-6 border border-dashed border-primary bg-primary-light cursor-pointer"
+        >
+            <input 
+                type="file" 
+                className="hidden" 
+                ref={fileInputRef} 
+                accept="image/*" 
+                onChange={(e) => handleFileChange(e.target.files?.[0])}
+            />
+            {!file ? (
+                <div className="text-center my-5">
+                    <FiUploadCloud className="text-primary mx-auto" size={24} />
+                    <p className="text-xs mt-2">Upload Your Payment Receipt here</p>
+                </div>
+            ) : (
+                <div className="text-center">
+                    <FiImage className="text-primary mx-auto mb-4" size={28} />
+                    <p className="text-sm text-primary font-medium">{file.name}</p>
+                    <p className="text-sm text-gray-400">
+                        {(file.size / 1024).toFixed(1)} KB
+                    </p>
+                    <button 
+                        onClick={removeFile}
+                        className="flex gap-2 items-center bg-primary/90 text-white mx-auto rounded mt-4 px-3 py-1 hover:bg-primary transition-colors"
+                    >
+                        <FiTrash2 className="self-center" size={16} /> 
+                        <span>Remove</span>
+                    </button>
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default FileUpload;

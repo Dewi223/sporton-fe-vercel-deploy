@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import CardWithHeader from "../ui/card-with-header";
 import Image from "next/image";
