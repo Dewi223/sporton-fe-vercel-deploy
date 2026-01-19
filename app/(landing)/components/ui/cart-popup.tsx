@@ -39,6 +39,7 @@ export const cartList = [
 
 const CartPopup = () => {
   const { push } = useRouter();
+  
 
   const totalPrice = cartList.reduce(
     (total, item) => total + item.price * item.qty,
