@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "../globals.css";
-import Header from "./components/layouts/header";
-import Footer from "./components/layouts/footer";
+import Sidebar from "./components/layouts/sidebar";
+import AuthGuard from "./components/layouts/auth-guard";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const poppins = Poppins({
   variable: "--font-poppins",
   display: "swap",
-  weight: ["400","500","600","700","800"]
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
-  title: "SportOn Website",
-  description: "Engineered for endurance and designed for speed. Experience gear that moves as fast as you do. Premium fabrics. Unmatched comfort. Limitless motion.",
+  title: "SportOn Admin",
+  description: "Admin Dashboard for SportOn Website",
 };
 
 export default function RootLayout({
@@ -20,12 +23,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${poppins.variable} antialiased`}>
-          <Header/>
-          {children}
-          <Footer/>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${poppins.variable} antialiased`}>
+        <div className="flex min-h-screen bg-white">
+          <Sidebar />
+          <main className="flex-1 ml-80 p-14 bg-[#F7F9FA] min-h-screen">
+            <div className="max-w-6xl mx-auto">
+              <AuthGuard>{children}</AuthGuard>
+            </div>
+          </main>
+          <ToastContainer position="bottom-right" />
+        </div>
       </body>
     </html>
   );
