@@ -1,30 +1,40 @@
-"use client";
+import type { Metadata } from "next";
+import { Poppins } from "next/font/google";
+import "../globals.css";
+import Sidebar from "./components/layouts/sidebar";
+import AuthGuard from "./components/layouts/auth-guard";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+const poppins = Poppins({
+  variable: "--font-poppins",
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
+});
 
-const AuthGuard = ({ children }: { children: React.ReactNode }) => {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      router.push("/admin/login");
-    } else {
-      setIsLoading(false);
-    }
-  }, [router]);
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
-      </div>
-    );
-  }
-
-  return <>{children}</>;
+export const metadata: Metadata = {
+  title: "SportOn Admin",
+  description: "Admin Dashboard for SportOn Website",
 };
 
-export default AuthGuard;
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${poppins.variable} antialiased`}>
+        <div className="flex min-h-screen bg-white">
+          <Sidebar />
+          <main className="flex-1 ml-80 p-14 bg-[#F7F9FA] min-h-screen">
+            <div className="max-w-6xl mx-auto">
+              <AuthGuard>{children}</AuthGuard>
+            </div>
+          </main>
+          <ToastContainer position="bottom-right" />
+        </div>
+      </body>
+    </html>
+  );
+}
